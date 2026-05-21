@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
  
-# Configuración básica y tema oscuro nativo
+
 st.set_page_config(page_title="Catalogo de Datos Masivos", layout="wide")
 sns.set_theme(style="dark", palette="pastel")
 plt.rcParams.update({
@@ -17,14 +17,14 @@ plt.rcParams.update({
  
 st.title("Catalogo Estadistico de Resultados")
  
-# Carga de datos masivos
+
 try:
     df = pd.read_csv("datos_masivos_examen.csv")
 except FileNotFoundError:
     st.error("No se encontró el archivo 'datos_masivos_examen.csv'")
     st.stop()
  
-# --- SECCIÓN 1: CATÁLOGO DE MÉTRICAS ---
+
 st.header("Resumen de Variables")
 cols = st.columns(3)
  
@@ -42,7 +42,7 @@ for i, (nombre, serie) in enumerate(metricas.items()):
             st.write(f"**Mediana:** {serie.median():.2f}")
             st.write(f"**Moda:** {serie.mode()[0]}")
  
-# --- SECCIÓN 2: CATÁLOGO DE GRÁFICOS ---
+
 st.divider()
 st.header("Visualizaciones del Catalogo")
  
@@ -69,8 +69,7 @@ with tab1:
 with tab2:
     st.write("**Poligono de Frecuencias y Acumulada (Precios)**")
    
-    # --- SOLUCIÓN AL PROBLEMA DE LA IMAGEN image_70cb20.png ---
-    # Creamos los bins y los convertimos a string inmediatamente para evitar el JSON
+  
     df['rango_precio'] = pd.cut(df['precio'], bins=10).apply(lambda x: f"{x.left:.2f} - {x.right:.2f}")
    
     frec_precio = df['rango_precio'].value_counts().sort_index()
@@ -85,5 +84,4 @@ with tab2:
  
 with tab3:
     with st.expander("Ver inventario completo de registros"):
-        # Mostramos el DataFrame limpio
         st.dataframe(df, use_container_width=True)
